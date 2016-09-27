@@ -56,7 +56,7 @@ namespace EffectiveRightsCheck.Wpf
 
         private void BrowseClick(object sender, RoutedEventArgs e)
         {
-            var browser = new ExplorerFolderBrower
+            var browser = new ExplorerFolderBrowser
                           {
                               SelectedPath = _initialDirectory
                           };
@@ -82,8 +82,8 @@ namespace EffectiveRightsCheck.Wpf
 
             foreach (
                 var nonactiveFlyout in
-                    Flyouts.Items.Cast<Flyout>()
-                           .Where(nonactiveFlyout => nonactiveFlyout.IsOpen && nonactiveFlyout.Name != activeFlyout.Name))
+                Flyouts.Items.Cast<Flyout>()
+                       .Where(nonactiveFlyout => nonactiveFlyout.IsOpen && nonactiveFlyout.Name != activeFlyout.Name))
             {
                 nonactiveFlyout.IsOpen = false;
             }
