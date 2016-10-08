@@ -1,9 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using EffectiveRightsCheck.Core;
 using EffectiveRightsCheck.Wpf.Core;
+using EvilBaschdi.Core.Application;
 using EvilBaschdi.Core.Browsers;
 using EvilBaschdi.Core.Wpf;
 using MahApps.Metro.Controls;
@@ -23,10 +27,10 @@ namespace EffectiveRightsCheck.Wpf
         {
             var coreSettings = new CoreSettings();
             InitializeComponent();
-            _style = new MetroStyle(this, Accent, Dark, Light, coreSettings);
-            _style.Load();
-
-
+            _style = new MetroStyle(this, Accent, ThemeSwitch, coreSettings);
+            _style.Load(true);
+            var linkerTime = Assembly.GetExecutingAssembly().GetLinkerTime();
+            LinkerTime.Content = linkerTime.ToString(CultureInfo.InvariantCulture);
             Load();
         }
 
@@ -111,13 +115,21 @@ namespace EffectiveRightsCheck.Wpf
             _style.SaveStyle();
         }
 
-        private void Theme(object sender, RoutedEventArgs e)
+        private void Theme(object sender, EventArgs e)
         {
             if (_overrideProtection == 0)
             {
                 return;
             }
-            _style.SetTheme(sender, e);
+            var routedEventArgs = e as RoutedEventArgs;
+            if (routedEventArgs != null)
+            {
+                _style.SetTheme(sender, routedEventArgs);
+            }
+            else
+            {
+                _style.SetTheme(sender);
+            }
         }
 
         private void AccentOnSelectionChanged(object sender, SelectionChangedEventArgs e)
