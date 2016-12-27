@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using EffectiveRightsCheck.Core;
-using EffectiveRightsCheck.Wpf.Core;
 using EvilBaschdi.Core.Application;
 using EvilBaschdi.Core.Browsers;
 using EvilBaschdi.Core.Wpf;
@@ -25,9 +24,10 @@ namespace EffectiveRightsCheck.Wpf
 
         public MainWindow()
         {
-            var coreSettings = new CoreSettings();
             InitializeComponent();
-            _style = new MetroStyle(this, Accent, ThemeSwitch, coreSettings);
+            var coreSettings = new CoreSettings(Properties.Settings.Default);
+            var themeManagerHelper = new ThemeManagerHelper();
+            _style = new MetroStyle(this, Accent, ThemeSwitch, coreSettings, themeManagerHelper);
             _style.Load(true);
             var linkerTime = Assembly.GetExecutingAssembly().GetLinkerTime();
             LinkerTime.Content = linkerTime.ToString(CultureInfo.InvariantCulture);
