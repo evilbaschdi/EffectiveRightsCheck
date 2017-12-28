@@ -26,7 +26,7 @@ namespace EffectiveRightsCheck.Core
 
 
         /// <summary>
-        ///     based on the rules retrieved figure out if the user has acces
+        ///     based on the rules retrieved figure out if the user has access
         /// </summary>
         /// <param name="userName">user name no domain</param>
         /// <param name="path">file share path</param>
