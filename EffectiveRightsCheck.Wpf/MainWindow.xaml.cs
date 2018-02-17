@@ -6,9 +6,11 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using EffectiveRightsCheck.Core;
-using EvilBaschdi.Core.Application;
-using EvilBaschdi.Core.Browsers;
-using EvilBaschdi.Core.Wpf;
+using EffectiveRightsCheck.Wpf.Properties;
+using EvilBaschdi.Core.Extensions;
+using EvilBaschdi.CoreExtended.AppHelpers;
+using EvilBaschdi.CoreExtended.Browsers;
+using EvilBaschdi.CoreExtended.Metro;
 using MahApps.Metro.Controls;
 
 namespace EffectiveRightsCheck.Wpf
@@ -16,19 +18,23 @@ namespace EffectiveRightsCheck.Wpf
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
+    // ReSharper disable once RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
     {
         private int _overrideProtection;
         private string _initialDirectory;
-        private readonly IMetroStyle _style;
+        private readonly IApplicationStyle _applicationStyle;
 
+
+        /// <inheritdoc />
         public MainWindow()
         {
             InitializeComponent();
-            var coreSettings = new CoreSettings(Properties.Settings.Default);
-            var themeManagerHelper = new ThemeManagerHelper();
-            _style = new MetroStyle(this, Accent, ThemeSwitch, coreSettings, themeManagerHelper);
-            _style.Load(true);
+            IAppSettingsBase appSettingsBase = new AppSettingsBase(Settings.Default);
+            IApplicationStyleSettings applicationStyleSettings = new ApplicationStyleSettings(appSettingsBase);
+            IThemeManagerHelper themeManagerHelper = new ThemeManagerHelper();
+            _applicationStyle = new ApplicationStyle(this, Accent, ThemeSwitch, applicationStyleSettings, themeManagerHelper);
+            _applicationStyle.Load(true);
             var linkerTime = Assembly.GetExecutingAssembly().GetLinkerTime();
             LinkerTime.Content = linkerTime.ToString(CultureInfo.InvariantCulture);
             Load();
@@ -112,7 +118,8 @@ namespace EffectiveRightsCheck.Wpf
             {
                 return;
             }
-            _style.SaveStyle();
+
+            _applicationStyle.SaveStyle();
         }
 
         private void Theme(object sender, EventArgs e)
@@ -121,15 +128,8 @@ namespace EffectiveRightsCheck.Wpf
             {
                 return;
             }
-            var routedEventArgs = e as RoutedEventArgs;
-            if (routedEventArgs != null)
-            {
-                _style.SetTheme(sender, routedEventArgs);
-            }
-            else
-            {
-                _style.SetTheme(sender);
-            }
+
+            _applicationStyle.SetTheme(sender);
         }
 
         private void AccentOnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -138,7 +138,8 @@ namespace EffectiveRightsCheck.Wpf
             {
                 return;
             }
-            _style.SetAccent(sender, e);
+
+            _applicationStyle.SetAccent(sender, e);
         }
 
         #endregion MetroStyle

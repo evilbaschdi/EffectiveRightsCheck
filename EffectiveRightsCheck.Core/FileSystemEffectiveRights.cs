@@ -18,7 +18,7 @@ namespace EffectiveRightsCheck.Core
 
             if (!Directory.Exists(path) && !File.Exists(path))
             {
-                throw new ArgumentException($"path:  {path}");
+                throw new ArgumentException($"path: {path}");
             }
 
             return GetEffectiveRights(userName, path);
@@ -109,16 +109,24 @@ namespace EffectiveRightsCheck.Core
 
             // use WindowsIdentity to get the user's groups
             var windowsIdentity = new WindowsIdentity(user.UserPrincipalName);
-            var sids = new string[windowsIdentity.Groups.Count + 1];
-
-            sids[0] = windowsIdentity.User.Value;
-
-            for (int index = 1, total = windowsIdentity.Groups.Count; index < total; index++)
+            if (windowsIdentity.Groups != null)
             {
-                sids[index] = windowsIdentity.Groups[index].Value;
+                var sids = new string[windowsIdentity.Groups.Count + 1];
+
+                if (windowsIdentity.User != null)
+                {
+                    sids[0] = windowsIdentity.User.Value;
+                }
+
+                for (int index = 1, total = windowsIdentity.Groups.Count; index < total; index++)
+                {
+                    sids[index] = windowsIdentity.Groups[index].Value;
+                }
+
+                return sids;
             }
 
-            return sids;
+            return new string[] { };
         }
     }
 }
