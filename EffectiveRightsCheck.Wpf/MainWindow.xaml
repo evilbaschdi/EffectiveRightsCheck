@@ -3,23 +3,19 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      ResizeMode="CanMinimize" GlowBrush="{DynamicResource AccentColorBrush}"
+                      ResizeMode="CanMinimize" GlowBrush="{DynamicResource MahApps.Brushes.AccentBase}"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       mc:Ignorable="d" ShowIconOnTitleBar="False" TitleCharacterCasing="Normal" Icon="b.ico"
                       Title="EffectiveRights Check" Height="250" Width="500">
     <!--  RightWindowCommands  -->
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <!--  Settings  -->
-            <Button Click="ToggleSettingsFlyoutClick">
+            <!-- About -->
+            <Button Click="AboutWindowClick">
                 <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-
-                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="settings" />
+                    <iconPacks:PackIconMaterial Kind="Information" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="about" />
                 </StackPanel>
             </Button>
         </controls:WindowCommands>
@@ -31,12 +27,8 @@
         <TextBox x:Name="InitialDirectory" Height="30" Margin="50,10,115,0" VerticalAlignment="Top" LostFocus="InitialDirectoryOnLostFocus" VerticalContentAlignment="Center" />
         <Button Name="Browse" Width="100" Margin="0,10,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="BrowseClick">
             <StackPanel Orientation="Horizontal">
-                <Rectangle Width="20" Height="20"
-                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_folder}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
+                <iconPacks:PackIconMaterial Kind="FolderOutline" Width="20" Height="20"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="browse" />
             </StackPanel>
         </Button>
@@ -45,12 +37,8 @@
         <TextBox x:Name="UserName" Height="30" Margin="50,50,115,0" VerticalAlignment="Top" VerticalContentAlignment="Center" />
         <Button Name="CheckRights" Width="100" Margin="0,50,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="CheckRightsOnClick">
             <StackPanel Orientation="Horizontal">
-                <Rectangle Width="20" Height="20"
-                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_progress}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
+                <iconPacks:PackIconMaterial Kind="CheckAll" Width="20" Height="20" HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
                 <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="check" />
             </StackPanel>
         </Button>
@@ -58,49 +46,4 @@
         <Label Width="35" Height="30" Margin="10,90,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <TextBox x:Name="Result" Height="30" Margin="50,90,10,0" VerticalAlignment="Top" IsReadOnly="True" VerticalContentAlignment="Center" />
     </Grid>
-    <!--  Flyouts  -->
-    <controls:MetroWindow.Flyouts>
-        <controls:FlyoutsControl>
-            <!--  Settings Flyout  -->
-            <controls:Flyout Name="SettingsFlyout" Width="250" AnimateOnPositionChange="True" AnimateOpacity="True" Header="settings" Position="Right" Theme="Accent">
-                <StackPanel>
-                    <!-- Theme -->
-                    <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
-                        <Label Width="50" Margin="0,5,0,0" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" Content="Theme" />
-                        <controls:ToggleSwitch Name="ThemeSwitch" Margin="10,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12" IsCheckedChanged="Theme"
-                                               OnSwitchBrush="{DynamicResource AccentColorBrush}" OnLabel="Dark"
-                                               OffSwitchBrush="{DynamicResource AccentColorBrush}" OffLabel="Light" />
-                    </StackPanel>
-                    <!-- Accent -->
-                    <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
-                        <Label Width="50" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Accent:" />
-                        <ComboBox Name="Accent" Width="165" Margin="10,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="AccentOnSelectionChanged" />
-                    </StackPanel>
-                    <!-- Save Style -->
-                    <StackPanel Margin="10,5,0,0" Orientation="Horizontal">
-                        <Button Name="SaveStyle" Width="165" Margin="60,5,0,0" Click="SaveStyleClick">
-                            <StackPanel Orientation="Horizontal">
-                                <Rectangle Width="16" Height="16" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_save}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="save style" />
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                    <!-- Horizontal Line -->
-                    <StackPanel Margin="0,10,0,0" Orientation="Vertical">
-                        <Rectangle Width="220" VerticalAlignment="Stretch" Stroke="{DynamicResource AccentColorBrush}" />
-                    </StackPanel>
-                    <!-- Build / Linker Time -->
-                    <StackPanel Orientation="Horizontal">
-                        <Label Width="50" Margin="10,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Build" />
-                        <Label Width="310" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Name="LinkerTime" />
-                    </StackPanel>
-                </StackPanel>
-            </controls:Flyout>
-        </controls:FlyoutsControl>
-    </controls:MetroWindow.Flyouts>
 </controls:MetroWindow>

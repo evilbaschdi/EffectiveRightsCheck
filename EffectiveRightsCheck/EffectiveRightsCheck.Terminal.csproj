@@ -1,34 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFrameworks>net462;net48</TargetFrameworks>
-     <Version>$([System.DateTime]::UtcNow.AddHours(2).ToString(yyyy.M.d.Hmm))-develop</Version>
+    <ApplicationIcon>b.ico</ApplicationIcon>
+    <Version>$([System.DateTime]::UtcNow.AddHours(2).ToString(yyyy.M.d.Hmm))-develop</Version>
     <Authors>Sebastian Walter</Authors>
     <Copyright>Copyright © 2016 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
     <Company>evilbaschdi (Sebastian Walter)</Company>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="EvilBaschdi.Core" Version="2019.7.27.1257-develop" />
-    <PackageReference Include="System.DirectoryServices" Version="4.6.0-preview7.19362.9" />
-      <PackageReference Include="System.Management" Version="4.6.0-preview7.19362.9" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />
     <PackageReference Include="Microsoft.SourceLink.Vsts.Git" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" PrivateAssets="All" />
   </ItemGroup>
-  
-    <ItemGroup Condition=" '$(TargetFramework)' != 'net462' ">
-  
-     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.6.0-preview7.19362.9" />
 
+  <ItemGroup>
+    <ProjectReference Include="..\EffectiveRightsCheck.Core\EffectiveRightsCheck.Core.csproj" />
   </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
-
-  <Reference Include="System.DirectoryServices.AccountManagement" />
-
+  <ItemGroup>
+    <Resource Include="b.ico" />
   </ItemGroup>
-
-
 
 </Project>

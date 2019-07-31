@@ -88,14 +88,23 @@ namespace EffectiveRightsCheck.Core
         private static string[] GetSecurityIdentifierArray(string userName)
         {
             // connect to the domain
-            var pc = new PrincipalContext(ContextType.Domain);
+            UserPrincipal user;
+            try
+            {
+                using (var pc = new PrincipalContext(ContextType.Domain))
+                {
+                    user = new UserPrincipal(pc)
+                           {
+                               SamAccountName = userName
+                           };
+                }
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException(e.Message);
+            }
 
 
-            // search for the domain user
-            var user = new UserPrincipal(pc)
-                       {
-                           SamAccountName = userName
-                       };
             var searcher = new PrincipalSearcher
                            {
                                QueryFilter = user

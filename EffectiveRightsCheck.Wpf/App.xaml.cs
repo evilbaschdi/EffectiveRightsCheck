@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using EvilBaschdi.CoreExtended.Metro;
 
 namespace EffectiveRightsCheck.Wpf
 {
@@ -13,5 +14,13 @@ namespace EffectiveRightsCheck.Wpf
     /// </summary>
     public partial class App : Application
     {
+        /// <inheritdoc />
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            var themeManagerHelper = new ThemeManagerHelper();
+            themeManagerHelper.RegisterSystemColorTheme();
+
+            base.OnStartup(e);
+        }
     }
 }

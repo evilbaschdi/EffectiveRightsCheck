@@ -1,28 +1,28 @@
 ﻿using System;
 using EffectiveRightsCheck.Core;
 
-namespace EffectiveRightsCheck.Console
+namespace EffectiveRightsCheck.Terminal
 {
-    public class Program
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
             if (args == null)
             {
                 throw new ArgumentNullException(nameof(args));
             }
 
-            System.Console.Write("userName: ");
-            var userName = System.Console.ReadLine();
-            System.Console.Write("path: ");
-            var path = System.Console.ReadLine();
+            Console.Write("userName: ");
+            var userName = Console.ReadLine();
+            Console.Write("path: ");
+            var path = Console.ReadLine();
 
             var rights = FileSystemEffectiveRights.GetRights(userName, path);
-            System.Console.WriteLine();
+            Console.WriteLine();
 
 
-            System.Console.WriteLine(rights);
-            System.Console.ReadLine();
+            Console.WriteLine(rights);
+            Console.ReadLine();
         }
     }
 }
