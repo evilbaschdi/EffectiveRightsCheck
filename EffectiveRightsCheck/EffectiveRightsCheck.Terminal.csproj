@@ -4,13 +4,14 @@
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net462;net48</TargetFrameworks>
     <ApplicationIcon>b.ico</ApplicationIcon>
-    <Version>$([System.DateTime]::UtcNow.AddHours(2).ToString(yyyy.M.d.Hmm))-develop</Version>
+    <Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))-develop</Version>
     <Authors>Sebastian Walter</Authors>
     <Copyright>Copyright © 2016 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
     <Company>evilbaschdi (Sebastian Walter)</Company>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="EvilBaschdi.Core" Version="2019.7.27.1257-develop" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2019.10.10.1115-develop" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />
     <PackageReference Include="Microsoft.SourceLink.Vsts.Git" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" PrivateAssets="All" />

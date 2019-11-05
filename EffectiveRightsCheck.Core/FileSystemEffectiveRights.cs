@@ -91,13 +91,11 @@ namespace EffectiveRightsCheck.Core
             UserPrincipal user;
             try
             {
-                using (var pc = new PrincipalContext(ContextType.Domain))
-                {
-                    user = new UserPrincipal(pc)
-                           {
-                               SamAccountName = userName
-                           };
-                }
+                using var pc = new PrincipalContext(ContextType.Domain);
+                user = new UserPrincipal(pc)
+                       {
+                           SamAccountName = userName
+                       };
             }
             catch (Exception e)
             {
@@ -105,10 +103,10 @@ namespace EffectiveRightsCheck.Core
             }
 
 
-            var searcher = new PrincipalSearcher
-                           {
-                               QueryFilter = user
-                           };
+            using var searcher = new PrincipalSearcher
+                                 {
+                                     QueryFilter = user
+                                 };
             user = searcher.FindOne() as UserPrincipal;
 
             if (user == null)
@@ -117,7 +115,7 @@ namespace EffectiveRightsCheck.Core
             }
 
             // use WindowsIdentity to get the user's groups
-            var windowsIdentity = new WindowsIdentity(user.UserPrincipalName);
+            using var windowsIdentity = new WindowsIdentity(user.UserPrincipalName);
             if (windowsIdentity.Groups != null)
             {
                 var sids = new string[windowsIdentity.Groups.Count + 1];
