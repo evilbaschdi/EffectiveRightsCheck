@@ -1,35 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net462;net48</TargetFrameworks>
-     <Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))-develop</Version>
+    <TargetFrameworks>net5.0-windows</TargetFrameworks>
+    <Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
     <Authors>Sebastian Walter</Authors>
     <Copyright>Copyright © 2016 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
     <Company>evilbaschdi (Sebastian Walter)</Company>
-      <LangVersion>8</LangVersion>
+    <LangVersion>9</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EvilBaschdi.Core" Version="2019.10.10.1115-develop" />
-    <PackageReference Include="System.DirectoryServices" Version="4.6.0" />
-      <PackageReference Include="System.Management" Version="4.6.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.0.0-beta2-19367-01" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" PrivateAssets="All" />
+    <PackageReference Include="EvilBaschdi.Core" Version="2021.7.12.1538-develop" />
+    <PackageReference Include="System.DirectoryServices" Version="6.0.0-preview.7.21377.19" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="5.0.0" />
+    <PackageReference Include="System.IO.FileSystem.AccessControl" Version="6.0.0-preview.5.21301.5" />
+    <PackageReference Include="System.Management" Version="6.0.0-preview.7.21377.19" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.1.0-beta-20204-02" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="6.0.0-preview.7.21377.19" />
   </ItemGroup>
-  
-    <ItemGroup Condition=" '$(TargetFramework)' != 'net462' ">
-  
-     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.6.0" />
-
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
-
-  <Reference Include="System.DirectoryServices.AccountManagement" />
-
-  </ItemGroup>
-
-
 
 </Project>

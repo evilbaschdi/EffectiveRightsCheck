@@ -3,8 +3,12 @@ using EffectiveRightsCheck.Core;
 
 namespace EffectiveRightsCheck.Terminal
 {
+    // ReSharper disable once ArrangeTypeModifiers
+    // ReSharper disable once ClassNeverInstantiated.Global
     class Program
     {
+        // ReSharper disable once ArrangeTypeMemberModifiers
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
         static void Main(string[] args)
         {
             if (args == null)
@@ -12,10 +16,20 @@ namespace EffectiveRightsCheck.Terminal
                 throw new ArgumentNullException(nameof(args));
             }
 
-            Console.Write("userName: ");
-            var userName = Console.ReadLine();
-            Console.Write("path: ");
-            var path = Console.ReadLine();
+            var userName = string.Empty;
+            var path = string.Empty;
+            while (string.IsNullOrWhiteSpace(userName))
+            {
+                Console.Write("userName: ");
+                userName = Console.ReadLine();
+            }
+
+            while (string.IsNullOrWhiteSpace(path))
+            {
+                Console.Write("path: ");
+                path = Console.ReadLine();
+            }
+
 
             var rights = FileSystemEffectiveRights.GetRights(userName, path);
             Console.WriteLine();

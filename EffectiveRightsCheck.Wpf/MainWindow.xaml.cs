@@ -2,11 +2,9 @@
 using System.IO;
 using System.Windows;
 using EffectiveRightsCheck.Core;
+using EvilBaschdi.CoreExtended;
 using EvilBaschdi.CoreExtended.Browsers;
-using EvilBaschdi.CoreExtended.Metro;
-using EvilBaschdi.CoreExtended.Mvvm;
-using EvilBaschdi.CoreExtended.Mvvm.View;
-using EvilBaschdi.CoreExtended.Mvvm.ViewModel;
+using EvilBaschdi.CoreExtended.Controls.About;
 using MahApps.Metro.Controls;
 
 namespace EffectiveRightsCheck.Wpf
@@ -17,7 +15,6 @@ namespace EffectiveRightsCheck.Wpf
     // ReSharper disable once RedundantExtendsListEntry
     public partial class MainWindow : MetroWindow
     {
-        private readonly IThemeManagerHelper _themeManagerHelper;
         private string _initialDirectory;
 
 
@@ -25,8 +22,8 @@ namespace EffectiveRightsCheck.Wpf
         public MainWindow()
         {
             InitializeComponent();
-            _themeManagerHelper = new ThemeManagerHelper();
-            IApplicationStyle applicationStyle = new ApplicationStyle(_themeManagerHelper);
+
+            IApplicationStyle applicationStyle = new ApplicationStyle();
             applicationStyle.Load(true);
 
             Load();
@@ -36,17 +33,17 @@ namespace EffectiveRightsCheck.Wpf
         {
             CheckRights.IsEnabled = !string.IsNullOrWhiteSpace(_initialDirectory) && Directory.Exists(_initialDirectory);
 
-            InitialDirectory.Text = _initialDirectory;
+            InitialDirectory.Text = _initialDirectory ?? string.Empty;
         }
 
         private void AboutWindowClick(object sender, RoutedEventArgs e)
         {
             var assembly = typeof(MainWindow).Assembly;
-            IAboutWindowContent aboutWindowContent = new AboutWindowContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
+            IAboutContent aboutWindowContent = new AboutContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
 
             var aboutWindow = new AboutWindow
                               {
-                                  DataContext = new AboutViewModel(aboutWindowContent, _themeManagerHelper)
+                                  DataContext = new AboutViewModel(aboutWindowContent)
                               };
 
             aboutWindow.ShowDialog();
@@ -54,11 +51,13 @@ namespace EffectiveRightsCheck.Wpf
 
         private void InitialDirectoryOnLostFocus(object sender, RoutedEventArgs e)
         {
-            if (Directory.Exists(InitialDirectory.Text))
+            if (!Directory.Exists(InitialDirectory.Text))
             {
-                _initialDirectory = InitialDirectory.Text;
-                Load();
+                return;
             }
+
+            _initialDirectory = InitialDirectory.Text;
+            Load();
         }
 
         private void CheckRightsOnClick(object sender, RoutedEventArgs e)

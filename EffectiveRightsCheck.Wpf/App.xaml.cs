@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using EvilBaschdi.CoreExtended.Metro;
+﻿using System.Windows;
+using ControlzEx.Theming;
 
 namespace EffectiveRightsCheck.Wpf
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    ///     Interaction logic for App.xaml
     /// </summary>
+    // ReSharper disable once RedundantExtendsListEntry
     public partial class App : Application
     {
         /// <inheritdoc />
         protected override void OnStartup(StartupEventArgs e)
         {
-            var themeManagerHelper = new ThemeManagerHelper();
-            themeManagerHelper.RegisterSystemColorTheme();
+            ThemeManager.Current.SyncTheme(ThemeSyncMode.SyncAll);
 
             base.OnStartup(e);
         }

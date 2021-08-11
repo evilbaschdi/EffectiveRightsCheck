@@ -4,16 +4,18 @@ using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using JetBrains.Annotations;
 
 namespace EffectiveRightsCheck.Core
 {
     public static class FileSystemEffectiveRights
     {
-        public static FileSystemRights GetRights(string userName, string path)
+        public static FileSystemRights GetRights([NotNull] string userName, string path)
         {
-            if (string.IsNullOrEmpty(userName))
+          
+            if (string.IsNullOrWhiteSpace(userName))
             {
-                throw new ArgumentException("userName");
+                throw new ArgumentNullException(nameof(userName));
             }
 
             if (!Directory.Exists(path) && !File.Exists(path))
@@ -33,13 +35,13 @@ namespace EffectiveRightsCheck.Core
         /// <returns></returns>
         private static FileSystemRights GetEffectiveRights(string userName, string path)
         {
-            FileSystemAccessRule[] accessRules = GetAccessRulesArray(userName, path);
+            var accessRules = GetAccessRulesArray(userName, path);
             FileSystemRights denyRights = 0;
             FileSystemRights allowRights = 0;
 
             for (int index = 0, total = accessRules.Length; index < total; index++)
             {
-                FileSystemAccessRule rule = accessRules[index];
+                var rule = accessRules[index];
 
                 if (rule.AccessControlType == AccessControlType.Deny)
                 {
@@ -64,14 +66,11 @@ namespace EffectiveRightsCheck.Core
         private static FileSystemAccessRule[] GetAccessRulesArray(string userName, string path)
         {
             // get all access rules for the path - this works for a directory path as well as a file path
-            AuthorizationRuleCollection authorizationRules = (new FileInfo(path)).GetAccessControl().GetAccessRules(true, true, typeof(SecurityIdentifier));
+            var authorizationRules = new FileInfo(path).GetAccessControl().GetAccessRules(true, true, typeof(SecurityIdentifier));
 
-            foreach (AuthorizationRule rule in authorizationRules)
-            {
-            }
-
+            
             // get the user's sids
-            string[] sids = GetSecurityIdentifierArray(userName);
+            var sids = GetSecurityIdentifierArray(userName);
 
             // get the access rules filtered by the user's sids
             return (from rule in authorizationRules.Cast<FileSystemAccessRule>()
@@ -92,7 +91,7 @@ namespace EffectiveRightsCheck.Core
             try
             {
                 using var pc = new PrincipalContext(ContextType.Domain);
-                user = new UserPrincipal(pc)
+                user = new(pc)
                        {
                            SamAccountName = userName
                        };
@@ -116,24 +115,25 @@ namespace EffectiveRightsCheck.Core
 
             // use WindowsIdentity to get the user's groups
             using var windowsIdentity = new WindowsIdentity(user.UserPrincipalName);
-            if (windowsIdentity.Groups != null)
+            if (windowsIdentity.Groups == null)
             {
-                var sids = new string[windowsIdentity.Groups.Count + 1];
-
-                if (windowsIdentity.User != null)
-                {
-                    sids[0] = windowsIdentity.User.Value;
-                }
-
-                for (int index = 1, total = windowsIdentity.Groups.Count; index < total; index++)
-                {
-                    sids[index] = windowsIdentity.Groups[index].Value;
-                }
-
-                return sids;
+                return Array.Empty<string>();
             }
 
-            return new string[] { };
+            var sids = new string[windowsIdentity.Groups.Count + 1];
+
+            if (windowsIdentity.User != null)
+            {
+                sids[0] = windowsIdentity.User.Value;
+            }
+
+            for (int index = 1, total = windowsIdentity.Groups.Count; index < total; index++)
+            {
+                sids[index] = windowsIdentity.Groups[index].Value;
+            }
+
+            return sids;
+
         }
     }
 }
