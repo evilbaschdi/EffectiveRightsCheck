@@ -16,6 +16,7 @@ namespace EffectiveRightsCheck.Wpf
     public partial class MainWindow : MetroWindow
     {
         private string _initialDirectory;
+        private readonly IRoundCorners _roundCorners;
 
 
         /// <inheritdoc />
@@ -23,8 +24,9 @@ namespace EffectiveRightsCheck.Wpf
         {
             InitializeComponent();
 
-            IApplicationStyle applicationStyle = new ApplicationStyle();
-            applicationStyle.Load(true);
+            _roundCorners = new RoundCorners();
+            IApplicationStyle style = new ApplicationStyle(_roundCorners, true);
+            style.Run();
 
             Load();
         }
@@ -43,7 +45,7 @@ namespace EffectiveRightsCheck.Wpf
 
             var aboutWindow = new AboutWindow
                               {
-                                  DataContext = new AboutViewModel(aboutWindowContent)
+                                  DataContext = new AboutViewModel(aboutWindowContent, _roundCorners)
                               };
 
             aboutWindow.ShowDialog();
