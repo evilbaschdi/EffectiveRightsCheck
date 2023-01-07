@@ -1,82 +1,77 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using EffectiveRightsCheck.Core;
+using EvilBaschdi.About.Core;
+using EvilBaschdi.About.Core.Models;
+using EvilBaschdi.About.Wpf;
+using EvilBaschdi.Core;
 using EvilBaschdi.CoreExtended;
 using EvilBaschdi.CoreExtended.Browsers;
-using EvilBaschdi.CoreExtended.Controls.About;
 using MahApps.Metro.Controls;
 
-namespace EffectiveRightsCheck.Wpf
+namespace EffectiveRightsCheck.Wpf;
+
+/// <summary>
+///     Interaction logic for MainWindow.xaml
+/// </summary>
+// ReSharper disable once RedundantExtendsListEntry
+public partial class MainWindow : MetroWindow
 {
-    /// <summary>
-    ///     Interaction logic for MainWindow.xaml
-    /// </summary>
-    // ReSharper disable once RedundantExtendsListEntry
-    public partial class MainWindow : MetroWindow
+    private string _initialDirectory;
+
+    /// <inheritdoc />
+    public MainWindow()
     {
-        private string _initialDirectory;
-        private readonly IRoundCorners _roundCorners;
+        InitializeComponent();
 
+        IApplicationStyle applicationStyle = new ApplicationStyle(true);
+        applicationStyle.Run();
 
-        /// <inheritdoc />
-        public MainWindow()
+        Load();
+    }
+
+    private void Load()
+    {
+        CheckRights.SetCurrentValue(IsEnabledProperty, !string.IsNullOrWhiteSpace(_initialDirectory) && Directory.Exists(_initialDirectory));
+
+        InitialDirectory.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, _initialDirectory ?? string.Empty);
+    }
+
+    private void AboutWindowClick(object sender, RoutedEventArgs e)
+    {
+        ICurrentAssembly currentAssembly = new CurrentAssembly();
+        IAboutContent aboutContent = new AboutContent(currentAssembly);
+        IAboutModel aboutModel = new AboutViewModel(aboutContent);
+        var aboutWindow = new AboutWindow(aboutModel);
+
+        aboutWindow.ShowDialog();
+    }
+
+    private void InitialDirectoryOnLostFocus(object sender, RoutedEventArgs e)
+    {
+        if (!Directory.Exists(InitialDirectory.Text))
         {
-            InitializeComponent();
-
-            _roundCorners = new RoundCorners();
-            IApplicationStyle style = new ApplicationStyle(_roundCorners, true);
-            style.Run();
-
-            Load();
+            return;
         }
 
-        private void Load()
-        {
-            CheckRights.IsEnabled = !string.IsNullOrWhiteSpace(_initialDirectory) && Directory.Exists(_initialDirectory);
+        _initialDirectory = InitialDirectory.Text;
+        Load();
+    }
 
-            InitialDirectory.Text = _initialDirectory ?? string.Empty;
-        }
+    private void CheckRightsOnClick(object sender, RoutedEventArgs e)
+    {
+        var rights = FileSystemEffectiveRights.GetRights(UserName.Text, _initialDirectory);
+        Result.SetCurrentValue(System.Windows.Controls.TextBox.TextProperty, rights.ToString());
+    }
 
-        private void AboutWindowClick(object sender, RoutedEventArgs e)
-        {
-            var assembly = typeof(MainWindow).Assembly;
-            IAboutContent aboutWindowContent = new AboutContent(assembly, $@"{AppDomain.CurrentDomain.BaseDirectory}\b.png");
-
-            var aboutWindow = new AboutWindow
-                              {
-                                  DataContext = new AboutViewModel(aboutWindowContent, _roundCorners)
-                              };
-
-            aboutWindow.ShowDialog();
-        }
-
-        private void InitialDirectoryOnLostFocus(object sender, RoutedEventArgs e)
-        {
-            if (!Directory.Exists(InitialDirectory.Text))
-            {
-                return;
-            }
-
-            _initialDirectory = InitialDirectory.Text;
-            Load();
-        }
-
-        private void CheckRightsOnClick(object sender, RoutedEventArgs e)
-        {
-            var rights = FileSystemEffectiveRights.GetRights(UserName.Text, _initialDirectory);
-            Result.Text = rights.ToString();
-        }
-
-        private void BrowseClick(object sender, RoutedEventArgs e)
-        {
-            var browser = new ExplorerFolderBrowser
-                          {
-                              SelectedPath = _initialDirectory
-                          };
-            browser.ShowDialog();
-            _initialDirectory = browser.SelectedPath;
-            Load();
-        }
+    private void BrowseClick(object sender, RoutedEventArgs e)
+    {
+        var browser = new ExplorerFolderBrowser
+                      {
+                          SelectedPath = _initialDirectory
+                      };
+        browser.ShowDialog();
+        _initialDirectory = browser.SelectedPath;
+        Load();
     }
 }
