@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFramework>net6.0-windows</TargetFramework>
+	<TargetFramework>net7.0-windows</TargetFramework>
 	<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
 	<Authors>Sebastian Walter</Authors>
 	<Copyright>Copyright © 2016 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
@@ -12,11 +12,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="EvilBaschdi.Core" Version="2023.2.1.1815-develop" />
-	<PackageReference Include="System.DirectoryServices" Version="7.0.0" />
-	<PackageReference Include="System.DirectoryServices.AccountManagement" Version="7.0.0" />
+	<PackageReference Include="EvilBaschdi.Core" Version="2023.2.21.1731" />
+	<PackageReference Include="System.DirectoryServices" Version="8.0.0-preview.1.23110.8" />
+	<PackageReference Include="System.DirectoryServices.AccountManagement" Version="8.0.0-preview.1.23110.8" />
 	<PackageReference Include="System.IO.FileSystem.AccessControl" Version="6.0.0-preview.5.21301.5" />
-	<PackageReference Include="System.Management" Version="7.0.0" />
+	<PackageReference Include="System.Management" Version="8.0.0-preview.1.23110.8" />
 	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
 		<PrivateAssets>all</PrivateAssets>
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

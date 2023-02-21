@@ -1,9 +1,7 @@
-
-
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	<OutputType>WinExe</OutputType>
-	<TargetFramework>net6.0-windows</TargetFramework>
+	<TargetFramework>net7.0-windows</TargetFramework>
 	<UseWPF>true</UseWPF>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
@@ -17,7 +15,8 @@
   </PropertyGroup>
  
   <ItemGroup>
-	<PackageReference Include="EvilBaschdi.CoreExtended" Version="2023.2.1.1955-develop" />
+	<PackageReference Include="EvilBaschdi.Core.Wpf" Version="2023.2.20.2127-develop" />
+	<PackageReference Include="EvilBaschdi.About.Wpf" Version="2023.2.19.836-develop" />
 	<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
 	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
 		<PrivateAssets>all</PrivateAssets>
