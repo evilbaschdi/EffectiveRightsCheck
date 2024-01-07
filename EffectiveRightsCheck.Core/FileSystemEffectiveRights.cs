@@ -95,10 +95,8 @@ public static class FileSystemEffectiveRights
             throw new ApplicationException(e.Message);
         }
 
-        using var searcher = new PrincipalSearcher
-                             {
-                                 QueryFilter = user
-                             };
+        using var searcher = new PrincipalSearcher();
+        searcher.QueryFilter = user;
         user = searcher.FindOne() as UserPrincipal;
 
         if (user == null)

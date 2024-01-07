@@ -1,58 +1,51 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-	<OutputType>WinExe</OutputType>
-	<TargetFramework>net7.0-windows</TargetFramework>
-	<UseWPF>true</UseWPF>
-	<AppDesignerFolder>Properties</AppDesignerFolder>
-	<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
-	<Authors>Sebastian Walter</Authors>
-	<Company>evilbaschdi (Sebastian Walter)</Company>
-	<Copyright>Copyright © 2016 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
-	<ApplicationIcon>b.ico</ApplicationIcon>
-	<LangVersion>preview</LangVersion>
-	  <EnableNETAnalyzers>true</EnableNETAnalyzers>
-	  <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
- 
-  <ItemGroup>
-	<PackageReference Include="EvilBaschdi.Core.Wpf" Version="2023.2.20.2127-develop" />
-	<PackageReference Include="EvilBaschdi.About.Wpf" Version="2023.2.19.836-develop" />
-	<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
-	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-	</PackageReference>
-	<PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.1.1">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-	</PackageReference>
-	<PackageReference Include="WpfAnalyzers" Version="4.1.1">
-	  <PrivateAssets>all</PrivateAssets>
-	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-	<ProjectReference Include="..\EffectiveRightsCheck.Core\EffectiveRightsCheck.Core.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-	<Resource Include="b.ico" />
-	<Content Include="about.png">
-	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	</Content>
-  </ItemGroup>
-  <ItemGroup>
-	<Compile Update="Properties\Settings.Designer.cs">
-	  <DesignTimeSharedInput>True</DesignTimeSharedInput>
-	  <AutoGen>True</AutoGen>
-	  <DependentUpon>Settings.settings</DependentUpon>
-	</Compile>
-  </ItemGroup>
-  <ItemGroup>
-	<None Update="Properties\Settings.settings">
-	  <Generator>SettingsSingleFileGenerator</Generator>
-	  <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-	</None>
-  </ItemGroup>
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<AppDesignerFolder>Properties</AppDesignerFolder>
+		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
+		<Authors>Sebastian Walter</Authors>
+		<Company>evilbaschdi (Sebastian Walter)</Company>
+		<Copyright>Copyright © 2016 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
+		<ApplicationIcon>b.ico</ApplicationIcon>
+		<LangVersion>preview</LangVersion>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="EvilBaschdi.Core.Wpf" />
+		<PackageReference Include="EvilBaschdi.About.Wpf" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Material" />
+		<PackageReference Include="WpfAnalyzers">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\EffectiveRightsCheck.Core\EffectiveRightsCheck.Core.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="b.ico" />
+		<Content Include="about.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
 
 </Project>

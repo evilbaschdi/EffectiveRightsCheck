@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="EvilBaschdi.About.Wpf" Version="2023.11.25.1102-develop" />
+    <PackageVersion Include="EvilBaschdi.Core" Version="2023.11.8.1715-develop" />
+    <PackageVersion Include="EvilBaschdi.Core.Wpf" Version="2023.12.10.835-develop" />
+    <PackageVersion Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
+    <PackageVersion Include="System.DirectoryServices" Version="8.0.0" />
+    <PackageVersion Include="System.DirectoryServices.AccountManagement" Version="8.0.0" />
+    <PackageVersion Include="System.Management" Version="8.0.0" />
+    <PackageVersion Include="WpfAnalyzers" Version="4.1.1" />
+  </ItemGroup>
+</Project>

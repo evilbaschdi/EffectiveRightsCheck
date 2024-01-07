@@ -24,8 +24,10 @@ public partial class MainWindow : MetroWindow
     {
         InitializeComponent();
 
-        IApplicationStyle applicationStyle = new ApplicationStyle(true);
+        IApplicationStyle applicationStyle = new ApplicationStyle();
+        IApplicationLayout applicationLayout = new ApplicationLayout();
         applicationStyle.Run();
+        applicationLayout.RunFor((true, false));
 
         Load();
     }
@@ -43,7 +45,8 @@ public partial class MainWindow : MetroWindow
         IAboutContent aboutContent = new AboutContent(currentAssembly);
         IAboutViewModel aboutModel = new AboutViewModel(aboutContent);
         IApplyMicaBrush applyMicaBrush = new ApplyMicaBrush();
-        var aboutWindow = new AboutWindow(aboutModel, applyMicaBrush);
+        IApplicationLayout applicationLayout = new ApplicationLayout();
+        var aboutWindow = new AboutWindow(aboutModel, applicationLayout, applyMicaBrush);
 
         aboutWindow.ShowDialog();
     }

@@ -1,7 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<OutputType>Exe</OutputType>
 		<TargetFramework>net8.0-windows</TargetFramework>
+		<ApplicationIcon>b.ico</ApplicationIcon>
 		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
 		<Authors>Sebastian Walter</Authors>
 		<Copyright>Copyright © 2016 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
@@ -10,12 +12,16 @@
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
-
 	<ItemGroup>
 		<PackageReference Include="EvilBaschdi.Core" />
-		<PackageReference Include="System.DirectoryServices" />
-		<PackageReference Include="System.DirectoryServices.AccountManagement" />		
-		<PackageReference Include="System.Management" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\EffectiveRightsCheck.Core\EffectiveRightsCheck.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="b.ico" />
 	</ItemGroup>
 
 </Project>
