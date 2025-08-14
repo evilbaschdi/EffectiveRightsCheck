@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-windows</TargetFramework>
-		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.Hmm))</Version>
+		<TargetFramework>net9.0-windows</TargetFramework>
+		<Version>$([System.DateTime]::UtcNow.ToString(yyyy.M.d.H))</Version>
 		<Authors>Sebastian Walter</Authors>
 		<Copyright>Copyright © 2016 - $([System.DateTime]::UtcNow.ToString(yyyy)) evilbaschdi</Copyright>
 		<Company>evilbaschdi (Sebastian Walter)</Company>

@@ -10,10 +10,7 @@ class Program
     // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
     static void Main(string[] args)
     {
-        if (args == null)
-        {
-            throw new ArgumentNullException(nameof(args));
-        }
+        ArgumentNullException.ThrowIfNull(args);
 
         var userName = string.Empty;
         var path = string.Empty;
